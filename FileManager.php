@@ -14,7 +14,6 @@ class FileManager
         return $_SERVER["DOCUMENT_ROOT"] . $this->root  . $folderName;
     }
     public function getList() {
-
         $contents = $this->file->getFolderContent();
         $isSuccess = !is_string($contents);
         $this->response(["isSuccess" => $isSuccess , "data" => $contents ]);
@@ -31,7 +30,6 @@ class FileManager
     {
         $oldName = $this->getFolderPath($_POST['oldname']);
         $newName = $this->getFolderPath($_POST['newname']);
-
         $result = $this->file->rename($oldName, $newName);
         $contents = $this->file->getFolderContent();
         $isSuccess = $result === 'success';
@@ -51,8 +49,6 @@ class FileManager
     public function createFolder(): void
     {
         $newFolder = $this->getFolderPath($_POST['current'] .'/'. $_POST['foldername']);
-
-
         $result = $this->file->createFolder($newFolder);;
         $contents = $this->file->getFolderContent();
         $isSuccess = $result === 'success';
