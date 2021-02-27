@@ -72,7 +72,7 @@
                     }, 200);
                 }
             },
-            renameItem(item){
+            renameItem(){
                 clearTimeout(this.activateTimerID);
                 this.isRenaming = true;
                 setTimeout(()=>{
@@ -84,7 +84,8 @@
                 const isNewNameFile = this.isFile(this.$refs.name.innerText);
                 const isFileNameCorrect = isPrevNameFile && isNewNameFile;
                 const isFolderNameCorrect = !isPrevNameFile && !isNewNameFile;
-                const isNameCorrect = isFileNameCorrect || isFolderNameCorrect;
+                const isNewNameNotEmpty = this.$refs.name.innerText != '';
+                const isNameCorrect = (isFileNameCorrect || isFolderNameCorrect) && isNewNameNotEmpty;
                 if (isNameCorrect){
                     console.log('name correct');
                     let formData = new FormData();
@@ -100,6 +101,9 @@
                     });
 
 
+                } else if (!isNewNameNotEmpty) {
+                    this.cancelRenaming();
+                    alert('Название не может быть пустым');
                 } else {
                     this.cancelRenaming();
                     if (!isPrevNameFile && isNewNameFile) {
